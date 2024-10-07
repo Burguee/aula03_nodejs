@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const routes = require('./routes/routes')
+
 require('dotenv').config()
 
 const mongoString = process.env.DATABASE_URL
@@ -18,17 +20,24 @@ database.once('connected', () => {
 
 // Criar a aplicação
 // Criar as rotas
+// getAll --> Retornar todos os elementos do DB
+// getOne --> Retornar um elemento de acordo com o id (ou outro campo específico)
+// post --> Criar um documento no DB
+// delete --> Apagar um documento no DB
+// update --> Atualizar um documento no DB
+
 // Criar a lógica do negócio
 
 const port = 3000
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send('Hello world')
-})
+// app.get('/', (req, res) => {
+//     res.send('Hello world')
+// })
 
-const senha = process.env.SENHA
-const usuario = process.env.USUARIO
+app.use(express.json())
+
+app.use('/api', routes)
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`)
